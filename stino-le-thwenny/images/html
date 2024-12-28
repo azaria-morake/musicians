@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S&L Music Duo</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #d1a3cc, #b5838d);
+            color: white;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            position: relative;
+        }
+        nav a:hover {
+            color: black;
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+        }
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-container img {
+            min-width: 100%;
+            height: auto;
+        }
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+        .content h2 {
+            font-size: 40px;
+            margin: 20px 0 10px;
+        }
+        .content p {
+            font-size: 18px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+            font-size: 16px;
+        }
+        .buttons a:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>S&L</h1>
+        <nav>
+            <a href="">Home</a>
+            <a href="">About Us</a>
+            <a href="">Upcoming Gigs</a>
+        </nav>
+    </header>
+
+    <section class="carousel">
+        <div class="carousel-container">
+            <img src="/images/image1.jpg" alt="Stino Le Thwenny 1">
+            <img src="/images/image2.jpg" alt="Stino Le Thwenny 2">
+            <img src="/images/image3.jpg" alt="Stino Le Thwenny 3">
+        </div>
+    </section>
+
+    <section class="content">
+        <h2>Stino Le Thwenny</h2>
+        <p>AirPods Max combine high-fidelity audio with industry-leading Active Noise Cancellation to deliver an unparalleled listening experience.</p>
+        <div class="buttons">
+            <a href="#">Stream</a>
+            <a href="#">Follow us</a>
+        </div>
+    </section>
+
+    <script>
+        let carouselIndex = 0;
+        const carouselContainer = document.querySelector('.carousel-container');
+        const images = document.querySelectorAll('.carousel-container img');
+        const totalImages = images.length;
+
+        function moveCarousel() {
+            carouselIndex = (carouselIndex + 1) % totalImages;
+            const offset = -carouselIndex * 100;
+            carouselContainer.style.transform = `translateX(${offset}%)`;
+        }
+
+        setInterval(moveCarousel, 3000);
+    </script>
+</body>
+</html>
+
