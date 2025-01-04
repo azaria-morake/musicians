@@ -19,6 +19,7 @@ import {
   BackgroundGradient,
   NavbarImage,
   NavItemsContainer,
+  Bg,
 } from './HomepageStyles';
 import Descriptions from './Description';
 
@@ -89,6 +90,7 @@ const Homepage = () => {
 
   return (
     <>
+    <Bg>
     <BackgroundGradient>     
        
       <Wrapper>
@@ -164,6 +166,7 @@ const Homepage = () => {
         )}
       </PageWrapper>
     </BackgroundGradient>
+    </Bg>
     </>
   );
 };

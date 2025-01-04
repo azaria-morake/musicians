@@ -9,14 +9,25 @@ const slideIn = keyframes`
   }
 `;
 
-export const BackgroundGradient = styled.div`
+export const BackgroundGradient = styled.div` 
   background: rgb(5, 5, 5);
   min-height: 100vh;
   padding: 20px;
   position: relative;
   overflow: hidden;
-
-
+  background-image: url('/gytis-bukauskas-28vTSxwQG0s-unsplash.jpg');
+  background-position: 30% 10%;
+  background-size: contain;
+  /* Pseudo-element for the dim overlay */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 5, 0.7); /* Semi-transparent black overlay */
+    z-index: 1; /* Ensure the overlay is above the background image */
   }
 `;
 
@@ -25,6 +36,11 @@ export const BackgroundGradient = styled.div`
   min-height: 100vh;
   padding: 20px;
 `; */
+export const Bg = styled.div`
+background: rgb(5, 5, 5);
+opacity: 100%;
+`;
+
 export const PageWrapper = styled.div`
   text-align: center;
   font-family: 'Arial', sans-serif;
@@ -39,11 +55,11 @@ export const PageWrapper = styled.div`
     pointer-events: none; /* Ensures the noise layer doesn't interfere with interactions */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     opacity: 0.2; /* Adjust opacity for subtlety */
-    z-index: 0;
+    z-index: 0; }
 `;
 
 export const Wrapper = styled.div`
-background-color:rgb(58, 46, 42);
+background-color:rgba(44, 37, 51, 0.17);
   background-image: url('/fredy-martinez-ou3fG2zWbcs-unsplash.jpg');
   background-blend-mode: overlay;
   background-size: cover;
@@ -68,6 +84,7 @@ export const Header = styled.h1`
   color: white;
   animation: ${slideIn} 1s ease-out;
   margin-left: -59px;
+  z-index: 2;
 `;
 
 export const Navbar = styled.nav`
@@ -96,13 +113,18 @@ export const NavItem = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  background-color: rgb(207, 3, 47);
+  height: 30px;
+  width: fit-content;
 
   &:hover {
-    background-color: white;
+    font-weight: 400;
+    background-color: rgb(255, 255, 255);;
     color: black;
     height: 30px;
     align-items: center;
+    width: fit-content; /* Expands width proportionally to content */
+    padding: 5px 20px; /* Optional: Add more padding on hover for better spacing */
   }
 `;
 export const CarouselContainer = styled.div`
@@ -114,6 +136,7 @@ export const CarouselContainer = styled.div`
   margin: 20px auto;
   padding: 20px 0;
   gap: 5 px;
+  z-index: 2;
 `;
 
 export const CarouselWrapper = styled.div`
@@ -198,6 +221,9 @@ export const GroupName = styled.h2`
   color: white;
   margin: 20px 0;
   animation: ${slideIn} 1s ease-out;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+  z-index: 2;
 `;
 
 export const Description = styled.p`
@@ -206,6 +232,8 @@ export const Description = styled.p`
   max-width: 600px;
   margin: 0 auto 30px;
   line-height: 1.6;
+  position: relative;
+  z-index: 2;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -215,20 +243,44 @@ export const ButtonWrapper = styled.div`
   z-index: 1;
 
   button {
-    background-color: black;
+    background-color: rgb(207, 3, 47);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-     z-index: 1;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    position: relative; /* Ensure the button's layout is stable */
+    min-width: 120px; /* Set a minimum width to prevent shifting */
+    /* Add a pseudo-element for the hover effect */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1; /* Place the pseudo-element behind the text */
+    }
 
     &:hover {
-      background-color: white;
       color: black;
+      font-weight: 300; /* Light font weight on hover */
       transform: translateY(-2px);
+
+      &::before {
+        opacity: 1; /* Show the white background on hover */
+      }
     }
   }
 `;
