@@ -240,7 +240,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
-  z-index: 1;
+  z-index: 3;
 
   button {
     background-color: rgb(207, 3, 47);
@@ -296,6 +296,7 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.3s ease;
+  z-index: 1000;
 `;
 
 export const ModalContent = styled.div`
@@ -305,6 +306,7 @@ export const ModalContent = styled.div`
   display: flex;
   gap: 20px;
   animation: ${slideIn} 0.3s ease;
+  z-index: 1001;
 `;
 
 export const Icon = styled.a`
