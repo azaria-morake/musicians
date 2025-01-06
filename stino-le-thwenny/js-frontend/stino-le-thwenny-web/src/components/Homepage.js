@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Layout from './Layout';
 import {
-  Wrapper,
   PageWrapper,
-  Header,
-  Navbar,
-  NavItem,
   CarouselContainer,
   CarouselWrapper,
   CarouselImageContainer,
@@ -16,10 +13,6 @@ import {
   Modal,
   ModalContent,
   Icon,
-  BackgroundGradient,
-  NavbarImage,
-  NavItemsContainer,
-  Bg,
 } from './HomepageStyles';
 import Descriptions from './Description';
 
@@ -89,25 +82,8 @@ const Homepage = () => {
   };
 
   return (
-    <>
-    <Bg>
-    <BackgroundGradient>     
-       
-      <Wrapper>
-     
-      
-        <NavItemsContainer>
-        <Header> | </Header>   
-          <img src="/img-13.jpeg" alt="bar" />
-          <NavItem href="">Home</NavItem>
-          <NavItem href="">About Us</NavItem>
-          <NavItem href="">Upcoming Gigs</NavItem>
-        </NavItemsContainer>
-
-      </Wrapper>
+    <Layout> {/* Wrap the content with the Layout component */}
       <PageWrapper>
-
-
         <CarouselContainer ref={carouselRef}>
           <CarouselButton className="prev" onClick={handlePrev}>
             &#8249;
@@ -132,7 +108,6 @@ const Homepage = () => {
 
         <GroupName>Stino Le Thwenny</GroupName>
         <Description> <Descriptions /> </Description>
-        
 
         <ButtonWrapper>
           <button onClick={() => setStreamModalOpen(true)}>Stream</button>
@@ -165,9 +140,7 @@ const Homepage = () => {
           </Modal>
         )}
       </PageWrapper>
-    </BackgroundGradient>
-    </Bg>
-    </>
+    </Layout>
   );
 };
 
