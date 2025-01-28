@@ -13,6 +13,10 @@ import {
   Modal,
   ModalContent,
   Icon,
+  CloseButton,
+  FullSizeImage,
+  CarouselModal,
+  CarouselModalContent,
 } from './HomepageStyles';
 import Descriptions from './Description';
 
@@ -22,7 +26,21 @@ const Homepage = () => {
   const [translateX, setTranslateX] = useState(0);
   const [autoScroll, setAutoScroll] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // State for full-size image
   const carouselRef = useRef(null);
+
+  const isMobile = window.innerWidth <= 768;
+  const imageWidth = isMobile ? window.innerWidth - 80 : 310; // Adjust width for mobile
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Reset position when switching between mobile and desktop
+      setTranslateX(0);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const images = [
     '/img-0.jpeg',
@@ -35,10 +53,9 @@ const Homepage = () => {
     '/img-7.jpeg',
     '/img-8.jpeg',
     '/img-9.jpeg',
-    '/img-13.jpeg',
+    '/bannerpic.jpg',
   ];
 
-  const imageWidth = 310; // 300px width + 10px gap
   const visibleImages = Math.floor((carouselRef.current?.offsetWidth || 0) / imageWidth);
   const maxTranslateX = -(imageWidth * (images.length - visibleImages));
 
@@ -59,7 +76,7 @@ const Homepage = () => {
     setAutoScroll(false);
     setTranslateX((prev) => {
       const nextTranslate = prev - imageWidth;
-      return nextTranslate <= maxTranslateX ? prev : nextTranslate;
+      return nextTranslate <= maxTranslateX ? 0 : nextTranslate;
     });
   };
 
@@ -67,7 +84,7 @@ const Homepage = () => {
     setAutoScroll(false);
     setTranslateX((prev) => {
       const nextTranslate = prev + imageWidth;
-      return nextTranslate >= 0 ? prev : nextTranslate;
+      return nextTranslate >= 0 ? 0 : nextTranslate; // Reset to 0 if at the first image
     });
   };
 
@@ -81,8 +98,16 @@ const Homepage = () => {
     setHoveredIndex(null);
   };
 
+  const handleImageClick = (image) => {
+    setSelectedImage(image); // Open modal with the selected image
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null); // Close modal
+  };
+
   return (
-    <Layout> {/* Wrap the content with the Layout component */}
+    <Layout>
       <PageWrapper>
         <CarouselContainer ref={carouselRef}>
           <CarouselButton className="prev" onClick={handlePrev}>
@@ -96,6 +121,7 @@ const Homepage = () => {
                 onMouseLeave={handleMouseLeave}
                 $isHovered={hoveredIndex === index}
                 $isAdjacent={hoveredIndex !== null && Math.abs(hoveredIndex - index) === 1}
+                onClick={() => handleImageClick(image)} // Add click handler
               >
                 <CarouselImage src={image} alt={`Carousel ${index + 1}`} />
               </CarouselImageContainer>
@@ -139,6 +165,15 @@ const Homepage = () => {
             </ModalContent>
           </Modal>
         )}
+
+        {selectedImage && ( // Full-size image modal
+  <CarouselModal onClick={handleCloseModal}>
+    <CarouselModalContent onClick={(e) => e.stopPropagation()}> {/* Prevent modal from closing when clicking inside */}
+      <CloseButton onClick={handleCloseModal}>X</CloseButton>
+      <FullSizeImage src={selectedImage} alt="Full Size" />
+    </CarouselModalContent>
+  </CarouselModal>
+)}
       </PageWrapper>
     </Layout>
   );

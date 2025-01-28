@@ -10,6 +10,13 @@ export const UpcomingGigsContainer = styled.div`
   overflow: visible; /* Allow overflow */
   background-image: url('/fredy-martinez-ou3fG2zWbcs-unsplash.jpg');
   background-size: 100%;
+
+  @media (max-width: 720px) {
+    margin-top: 20px;
+    padding: 10px; /* Reduce padding for smaller screens */
+    background-size: 150%; /* Adjust background size for smaller screens */
+    border-radius: 10px;
+  }
 `;
 
 export const Header = styled.h1`
@@ -32,6 +39,11 @@ export const Para = styled.p`
   padding-bottom: 0.5rem;
   position: relative;
   z-index: 1008;
+
+  @media (max-width: 720px ) {
+    font-style: normal;
+    margin: 15px;
+  }
 `;
 
 export const GigsGrid = styled.div`

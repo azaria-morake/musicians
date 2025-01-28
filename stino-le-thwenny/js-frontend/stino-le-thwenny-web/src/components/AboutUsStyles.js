@@ -1,4 +1,3 @@
-// AboutUsStyles.js
 import styled, { css, keyframes } from 'styled-components';
 
 export const AboutUsContainer = styled.div`
@@ -7,60 +6,116 @@ export const AboutUsContainer = styled.div`
   margin: 0 auto;
   font-family: 'Helvetica';
   line-height: 1.6;
-  color:rgb(216, 220, 224);
+  color: rgb(216, 220, 224);
   position: relative;
-  background: rgb(0, 0, 0, 0.8) ;
+  background: rgba(0, 0, 0, 0.8);
   background-image: url('/intricate-explorer-H0-3xfbU8wk-unsplash.jpg');
-  background-size: 150%; 
+  background-size: cover; /* Ensure the background image covers the container */
+  background-position: center; /* Center the background image */
   z-index: 1004;
+
+  @media (max-width: 720px) {
+    padding: 1rem; /* Reduce padding for smaller screens */
+    background-size: 150%; /* Adjust background size for smaller screens */
+  }
 `;
 
 export const WikipediaContainer = styled.div`
-  background: rgb(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.8);
   padding: 2rem;
   border: 1px solid #a2a9b1;
   border-radius: 3px;
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden; /* Ensure videos stay within the container */
-  background-image: url();
+
+  @media (max-width: 720px) {
+    padding: 1rem; /* Reduce padding for smaller screens */
+  }
 `;
 
 export const Header = styled.h1`
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
-  color: #000;
+  color: white;
   border-bottom: 1px solid #a2a9b1;
   padding-bottom: 0.5rem;
-  color: white;
-`;
 
-export const Paragraph = styled.p`
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: #202122;
+  @media (max-width: 720px) {
+    font-size: 1.5rem; /* Reduce font size for smaller screens */
+  }
 `;
 
 export const WikiImage = styled.img`
-  float: right;
-  margin: 0 0 1rem 1rem;
+  display: block; /* Ensure the image behaves as a block element */
+  margin: 1rem auto; /* Center the image horizontally */
   border: 1px solid #a2a9b1;
   border-radius: 3px;
   max-width: 300px;
   height: auto;
+
+  @media (max-width: 720px) {
+    max-width: 200px; /* Reduce image size for smaller screens */
+  }
+`;
+
+export const CenteredParagraph = styled.p`
+  text-align: left;
+  color: rgb(255, 255, 255);
+  margin-bottom: 3rem;
+  max-width: 100%; /* Ensure text covers the full width on smaller screens */
+
+  @media (max-width: 720px) {
+    margin-bottom: 1.5rem; /* Reduce margin for smaller screens */
+  }
+`;
+
+export const SectionHeading = styled.h3`
+  color: rgb(255, 255, 255);
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 720px) {
+    font-size: 1.2rem; /* Reduce font size for smaller screens */
+  }
+`;
+
+export const UnstyledList = styled.ul`
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+`;
+
+export const ListItem = styled.li`
+  margin-bottom: 0.5rem;
+`;
+
+export const StrongText = styled.strong`
+  font-weight: bold;
+`;
+
+export const Paragraph = styled.p`
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 720px) {
+    margin-bottom: 1rem; /* Reduce margin for smaller screens */
+  }
 `;
 
 export const VideoCarouselContainer = styled.div`
   position: relative;
   width: 100%;
-  overflow: hidden; /* Hide overflow to keep videos within the Wikipedia container */
+  overflow: hidden;
   margin: 20px 0;
-  height: 220px; /* Adjust height to fit videos */
+  height: 220px;
+
+  @media (max-width: 720px) {
+    height: 180px; /* Reduce height for smaller screens */
+  }
 `;
 
 export const VideoCarouselWrapper = styled.div`
   display: flex;
-  gap: 10px; /* 10px gap between videos */
+  gap: 10px;
   transform: translateX(${(props) => props.translateX}px);
   transition: transform 0.5s ease;
 `;
@@ -77,6 +132,10 @@ export const VideoCard = styled.div`
   align-content: center;
   align-items: center;
 
+  @media (max-width: 720px) {
+    width: 250px; /* Reduce card width for smaller screens */
+    height: 150px; /* Reduce card height for smaller screens */
+  }
 
   ${props =>
     props.$isHovered &&
@@ -100,7 +159,7 @@ export const VideoThumbnail = styled.img`
   object-fit: cover;
   border-radius: 10px;
   align-content: center;
-  align-items: center; 
+  align-items: center;
 `;
 
 export const PlayButtonOverlay = styled.div`
@@ -121,6 +180,12 @@ export const PlayButtonOverlay = styled.div`
 
   &:hover {
     background: rgba(0, 0, 0, 0.8);
+  }
+
+  @media (max-width: 720px) {
+    width: 40px; /* Reduce size for smaller screens */
+    height: 40px;
+    font-size: 18px;
   }
 `;
 
@@ -144,11 +209,16 @@ export const YTCarouselButton = styled.button`
   }
 
   &.prev {
-    left: 10px; /* Position outside the Wikipedia container */
+    left: 10px;
   }
 
   &.next {
-    right: 10px; /* Position outside the Wikipedia container */
+    right: 10px;
+  }
+
+  @media (max-width: 720px) {
+    width: 50px; /* Reduce size for smaller screens */
+    height: 50px;
   }
 `;
 

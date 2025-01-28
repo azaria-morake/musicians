@@ -59,24 +59,27 @@ export const PageWrapper = styled.div`
 `;
 
 export const Wrapper = styled.div`
-background-color:rgba(44, 37, 51, 0.17);
+  background-color: rgba(44, 37, 51, 0.17);
   background-image: url('/fredy-martinez-ou3fG2zWbcs-unsplash.jpg');
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
-padding: 0px;
-border-radius: 10px;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-margin-left: 0px;
-margin-right: 0px;
-margin-top: 0px;
-position: sticky;
-width: 100%;
-z-index: 1;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  width: calc(100% - 40px);
+  z-index: 1013;
+  margin: 0 auto;
 
+  @media (max-width: 720px) {
+    padding: 10px;
+    width: calc(100% - 20px);
+    
+  }
 `;
 
 export const Header = styled.h1`
@@ -100,33 +103,110 @@ export const NavItemsContainer = styled.div`
   display: flex;
   gap: 20px;
   align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0 20px;
+  
+  @media (max-width: 768px) {
+    &.desktop-nav {
+      display: none;
+    }
+  }
+`;
+
+export const NavImage = styled.div`
+  background-image: url('/img-13.jpeg');
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  width: 50%; /* Set a specific width */
+  height: 100px; /* Set a specific height */
+  transition: transform 0.3s ease;
+  margin-right: auto;
+
+  @media (max-width: 768px) {
+    width: 80px; /* Adjust for smaller screens */
+    height: 40px;
+  }
 `;
 
 export const NavItem = styled.a`
   color: white;
   text-decoration: none;
   font-weight: bold;
-  padding: 5px 10px;
+  padding: 5px 15px;
   border-radius: 5px;
   transition: all 0.3s ease;
-  margin-left: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(207, 3, 47);
   height: 30px;
   width: fit-content;
+  margin: 0 10px;
+
+  &:last-child {
+    margin-right: 20px;
+  }
 
   &:hover {
     font-weight: 400;
-    background-color: rgb(255, 255, 255);;
+    background-color: rgb(255, 255, 255);
     color: black;
     height: 30px;
     align-items: center;
-    width: fit-content; /* Expands width proportionally to content */
-    padding: 5px 20px; /* Optional: Add more padding on hover for better spacing */
+    width: fit-content;
+    padding: 5px 20px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%; /* Full width on mobile */
+    margin: 5px 0; /* Adjust margin for mobile */
+    justify-content: flex-start; /* Align text to the left */
+    padding: 10px 20px; /* Increase padding for better touch targets */
+    background-color: rgb(207, 3, 47); /* Ensure background color is consistent */
+    border-radius: 0; /* Remove border radius for a cleaner look */
+    &:hover {
+      background-color: rgb(207, 3, 47); /* Disable hover effect on mobile */
+      color: white; /* Ensure text color remains white */
+    }
   }
 `;
+
+export const BurgerMenu = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+    cursor: pointer;
+    z-index: 1009;
+  }
+`;
+
+export const BurgerIcon = styled.div`
+  font-size: 30px;
+  color: white;
+@media (max-width: 720px) {
+  font-size: 80px;
+}
+`;
+
+export const MobileNavItemsContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: ${({ isMenuOpen }) => (isMenuOpen ? '0' : '-100%')};
+    background-color: rgba(44, 37, 51, 0.9);
+    width: 100%;
+    transition: left 0.3s ease;
+    z-index: 1009;
+  }
+`;
+
+
 export const CarouselContainer = styled.div`
   position: relative;
   display: flex;
@@ -135,8 +215,14 @@ export const CarouselContainer = styled.div`
   width: 80%;
   margin: 20px auto;
   padding: 20px 0;
-  gap: 5 px;
+  gap: 5px;
   z-index: 2;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 20px auto;
+    padding: 0;
+  }
 `;
 
 export const CarouselWrapper = styled.div`
@@ -146,6 +232,11 @@ export const CarouselWrapper = styled.div`
   transition: transform 0.5s ease;
   margin: 0 50px;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    margin: 0 20px; // Added margin to prevent image from touching edges
+    gap: 10px;
+  }
 `;
 
 export const CarouselImageContainer = styled.div`
@@ -158,22 +249,37 @@ export const CarouselImageContainer = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   transform-origin: center;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+    width: calc(100vw - 120px); /* Adjust width to account for margins and gaps */
+    height: calc((100vw - 120px) * 0.75); /* Maintain aspect ratio */
+    transform: scale(1) !important; // Disable scaling on mobile
+    gap: 10px;
+    border-radius: 10px; // Ensure border radius is applied consistently
+  }
 
   ${props =>
     props.$isHovered &&
     css`
-      transform: scale(1.07);
-      z-index: 2;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      @media (min-width: 769px) {
+        transform: scale(1.07);
+        z-index: 2;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
     `}
   
   ${props =>
     !props.$isHovered &&
     css`
-      transform: scale(0.9);
-      opacity: 100%;
+      @media (min-width: 769px) {
+        transform: scale(0.9);
+        opacity: 100%;
+      }
     `}
-`;  
+`;
+
 
 export const CarouselImage = styled.img`
   width: 100%;
@@ -187,6 +293,7 @@ export const NavbarImage = styled.img`
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  gap: 20px;
 `;
 export const CarouselButton = styled.button`
   position: absolute;
@@ -202,17 +309,23 @@ export const CarouselButton = styled.button`
   z-index: 3;
   transition: all 0.3s ease;
 
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
   &:hover {
     background: black;
     transform: translateY(-50%) scale(1.1);
   }
 
   &.prev {
-    left: 10px;
+    left: 5px;
   }
 
   &.next {
-    right: 10px;
+    right: 5px;
   }
 `;
 
@@ -296,7 +409,7 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.3s ease;
-  z-index: 1000;
+  z-index: 10011;
 `;
 
 export const ModalContent = styled.div`
@@ -307,6 +420,81 @@ export const ModalContent = styled.div`
   gap: 20px;
   animation: ${slideIn} 0.3s ease;
   z-index: 1001;
+`;
+
+export const CarouselModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10111;
+`;
+
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CarouselModalContent = styled.div`
+  position: relative;
+  background: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10111;
+
+  /* Ensure the close button stays within the modal content */
+  & > ${CloseButton} {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease; // Add a smooth transition for hover effects
+  }
+    &:hover {
+      transform: scale(1.1); // Slight zoom effect on hover  
+  }
+`;
+
+
+
+export const FullSizeImage = styled.img`
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 10px;
+  object-fit: contain; /* Ensure the full image is visible */
 `;
 
 export const Icon = styled.a`
@@ -320,3 +508,68 @@ export const Icon = styled.a`
     transform: translateY(-2px);
   }
 `;
+
+export const BurgerButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+  margin-right: auto;
+  z-index: 1010; // Increased z-index to stay on top of everything
+
+  @media (max-width: 768px) {
+    display: block;
+    position: inherit; // Changed to fixed
+    left: 10px;
+    top: 15px; // Adjusted top position
+    z-index: 1010;
+  }
+`;
+
+export const MobileMenu = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: ${props => props.$isOpen ? '0' : '-100%'};
+    width: 250px;
+    height: 100vh;
+    background-color: rgb(5, 5, 5, 0.8);
+    background-image: url('/bannerpic.jpg');
+    background-size: 100%;
+    padding-top: 60px;
+    transition: left 0.3s ease;
+    z-index: 1001; // Increased z-index to stay on top
+  }
+`;
+
+export const MobileNavItem = styled(NavItem)`
+  @media (max-width: 768px) {
+    width: 50%; /* Full width on mobile */
+    margin: 10px 0; /* Adjust margin for mobile */
+    justify-content: flex-start; /* Align text to the left */
+    padding: 10px 20px; /* Increase padding for better touch targets */
+    background-color: rgb(207, 3, 47); /* Ensure background color is consistent */
+    border-radius: 0; /* Remove border radius for a cleaner look */
+    &:hover {
+      background-color: rgb(207, 3, 47); /* Disable hover effect on mobile */
+      color: white; /* Ensure text color remains white */
+    }
+  }
+`;
+
+export const NavLogo = styled.img`
+  height: 50px;
+  width: auto;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    height: 40px;
+  }
+`;
+

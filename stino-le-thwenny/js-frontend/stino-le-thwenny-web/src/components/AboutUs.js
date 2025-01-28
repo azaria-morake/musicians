@@ -5,7 +5,6 @@ import {
   AboutUsContainer,
   WikipediaContainer,
   Header,
-  Paragraph,
   VideoCarouselContainer,
   VideoCarouselWrapper,
   VideoCard,
@@ -16,6 +15,12 @@ import {
   YouTubeModalContent,
   CloseButton,
   WikiImage,
+  CenteredParagraph,
+  SectionHeading,
+  UnstyledList,
+  ListItem,
+  StrongText,
+  Paragraph,
 } from './AboutUsStyles';
 
 const AboutUs = () => {
@@ -24,40 +29,58 @@ const AboutUs = () => {
   const [translateX, setTranslateX] = useState(0);
   const carouselRef = useRef(null);
 
-  const youtubeApiKey = 'AIzaSyC2SJjHKr_bUo5SE8ik0nnoKyCSGHwhOFc';
+  const youtubeApiKey = 'AIzaSyC2SJjHKr_bUo5SE8ik0nnoKyCSGHwhOFc'; // Replace with your YouTube API key
+  const CHANNEL_NAME = 'StinoLeThwenny'; // YouTube channel name
 
-  // Extract video IDs from YouTube URLs
-  const videoUrls = [
-    { id: '1', url: 'https://www.youtube.com/watch?v=bPejOJN9n9o' },
-    { id: '2', url: 'https://www.youtube.com/watch?v=ij2IlhR2zDo' },
-    { id: '3', url: 'https://www.youtube.com/watch?v=cYPzZbv21HQ' },
-    { id: '4', url: 'https://www.youtube.com/watch?v=QjF_XMMPYqY' },
-    { id: '5', url: 'https://www.youtube.com/watch?v=DIF4VO4ZFpI' },
-    { id: '6', url: 'https://www.youtube.com/watch?v=EAXk4vXOI8c' },
-  ];
-
-  // Fetch video data from YouTube API
+  // Fetch videos from the YouTube channel
   useEffect(() => {
-    const fetchVideoData = async () => {
-      const videoData = await Promise.all(
-        videoUrls.map(async (video) => {
-          const videoId = video.url.split('v=')[1];
-          const response = await axios.get(
-            `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${youtubeApiKey}&part=snippet`
-          );
-          const snippet = response.data.items[0].snippet;
-          return {
-            id: video.id,
-            url: video.url,
-            title: snippet.title,
-            thumbnail: snippet.thumbnails.medium.url,
-          };
-        })
-      );
-      setVideos(videoData);
+    const fetchVideos = async () => {
+      try {
+        // Step 1: Get the channel ID using the channel name
+        const channelResponse = await axios.get(
+          `https://www.googleapis.com/youtube/v3/search`,
+          {
+            params: {
+              part: 'snippet',
+              q: CHANNEL_NAME,
+              type: 'channel',
+              key: youtubeApiKey,
+            },
+          }
+        );
+
+        const channelId = channelResponse.data.items[0].id.channelId;
+
+        // Step 2: Fetch videos from the channel using the channel ID
+        const videosResponse = await axios.get(
+          `https://www.googleapis.com/youtube/v3/search`,
+          {
+            params: {
+              part: 'snippet',
+              channelId: channelId,
+              maxResults: 20, // Adjust the number of videos to fetch
+              order: 'date', // Fetch the latest videos
+              type: 'video',
+              key: youtubeApiKey,
+            },
+          }
+        );
+
+        // Extract video details
+        const videoList = videosResponse.data.items.map((item) => ({
+          id: item.id.videoId,
+          url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+          title: item.snippet.title,
+          thumbnail: item.snippet.thumbnails.medium.url,
+        }));
+
+        setVideos(videoList);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
     };
 
-    fetchVideoData();
+    fetchVideos();
   }, [youtubeApiKey]);
 
   // Function to open YouTube modal
@@ -85,37 +108,47 @@ const AboutUs = () => {
       <AboutUsContainer>
         {/* Wikipedia-style Container */}
         <WikipediaContainer>
+        <WikiImage src="/propic.jpg" alt="About Us" />
           <Header>About Stino Le Thwenny</Header>
-          <WikiImage src="/propic.jpg" alt="About Us" />
-          <p class="text-center text-muted mb-5">
-      Stino Le Thwenny is a South African hip-hop duo from Bloemfontein, known for their unique blend of Kwaito and hip-hop influences. The group consists of Katlego "Castino the Hero" Semaye and Kanelo "Thwenny" Motaung, who began making music together in 2014.
-    </p>
+          
 
-    <h3 class="text-secondary">Career Highlights</h3>
-    <ul class="list-unstyled mb-4">
-      <li>
-        <strong>Early Beginnings:</strong> The duo aimed to introduce a new sound to the South African music scene.
-      </li>
-      <li>
-        <strong>Breakthrough Collaborations:</strong> Collaborations with Khuli Chana, Tyler ICU, and Lady Du on tracks like "Buyile" earned them mainstream recognition.
-      </li>
-      <li>
-        <strong>Hit Singles:</strong> "Mshimane 2.0," featuring K.O, Khuli Chana, and Major League DJs, received significant acclaim.
-      </li>
-      <li>
-        <strong>Debut Album:</strong> Released "You Want Some More?" in 2023, featuring collaborations with Maglera Doe Boy.
-      </li>
-    </ul>
+  <CenteredParagraph>
+    Stino Le Thwenny is a South African hip-hop duo from Bloemfontein, known for our unique blend of Kwaito and hip-hop influences. The group consists of Katlego "Castino the Hero" Semaye and Kanelo "Thwenny" Motaung, who began making music together in 2014.
+  </CenteredParagraph>
 
-    <h3 class="text-secondary">Musical Style</h3>
-    <p class="mb-4">
-      Stino Le Thwenny's sound blends South African musical traditions with contemporary hip-hop, creating authentic and resonant music described as "rooted, spiritual, and believable."
-    </p>
+  <SectionHeading>Career Highlights</SectionHeading>
+  <UnstyledList>
+    <ListItem>
+      <StrongText>Early Beginnings:</StrongText> We aimed to introduce a new sound to the South African music scene.
+    </ListItem>
+    <ListItem>
+      <StrongText>Breakthrough Collaborations:</StrongText> Collaborations with Khuli Chana, Tyler ICU, and Lady Du on tracks like "Buyile" earned us mainstream recognition. We've also worked with
+      Cassper Nyovest, KO, Maglera Doe Boy, Nadia Nadia, Boity, Dj PH, Roiii, Makwa, Ntate Stunna and Major League Djz.
+    </ListItem>
+    <ListItem>
+      <StrongText>Hit Singles:</StrongText> "Mshimane 2.0," featuring K.O, Khuli Chana, and Major League DJs, received significant acclaim.
+    </ListItem>
+    <ListItem>
+      <StrongText>Debut Album:</StrongText> Released "You Want Some More?" in 2023, featuring collaborations with Maglera Doe Boy.
+    </ListItem>
+  </UnstyledList>
 
-    <h3 class="text-secondary">Challenges and Achievements</h3>
-    <p class="mb-4">
-      Despite challenges in introducing a new sound and navigating the complexities of the music business, the duo has achieved significant milestones, including multiple hit songs and collaborations with their idols.
-    </p>
+  <SectionHeading>Musical Style</SectionHeading>
+  <Paragraph>
+    Stino Le Thwenny's sound blends South African musical traditions with contemporary hip-hop, creating authentic and resonant music described as "rooted, spiritual, and believable."
+  </Paragraph>
+
+  <SectionHeading>Challenges and Achievements</SectionHeading>
+  <Paragraph>
+    Despite challenges in introducing a new sound and navigating the complexities of the music business, we've achieved significant milestones, including multiple hit songs and collaborations with our idols.
+  </Paragraph>
+
+  <SectionHeading>Contact/Bookings</SectionHeading>
+  <Paragraph>
+    bookstinolethwenny@gmail.com
+    Contact : (071) 299-8297
+    WhatsApp: 072 657 4635
+  </Paragraph>
 
         </WikipediaContainer>
 
